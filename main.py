@@ -5,6 +5,7 @@ from handlers.start import start_router
 from hw4.bot import bot, dp
 from hw4.shop import shop_router
 from handlers.table import init, create, populate
+from handlers.rules import start, check_forbidden_words
 
 
 async def on_startup():
@@ -12,7 +13,8 @@ async def on_startup():
     init()
     create()
     populate()
-
+    start()
+    check_forbidden_words()
 async def main():
     await bot.set_my_commands([
         types.BotCommand(command="start", description="Начало")
@@ -20,6 +22,7 @@ async def main():
     dp.include_router(start_router)
     dp.include_router(shop_router)
     dp.startup.register(on_startup)
+
     await dp.start_polling(bot)
 
 
